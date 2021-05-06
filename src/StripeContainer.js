@@ -4,10 +4,10 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import { StripeForm } from "./StripeForm";
 
-const SANDBOX = false
+const SANDBOX = true
 
-const PUBLIC_KEY_TEST = "pk_test_51IkEUZFIhuPIgcmzz1TqaJ3BF72sBkyTUi9XvsJa7yiwARjWnKdJZcFxxbNChIRjnqdV22NSvKBC9rq8Cx1mbwIQ00kTfcKVIR";
-const PUBLIC_KEY_LIVE = "pk_live_51IkEUZFIhuPIgcmz7DJhYnEnjdlLZ42EbFLH4ztzYWgV44ZeoWl8drHmkkytTM4apfk0KZtNQrqYgbPRtXIWFCiz00eFYDpRId";
+const PUBLIC_KEY_TEST = "pk_test_51InSXCJ3U7h4NHwd3Nh0B0V9Z2kFcipnZDZ5OvP0Fuhm4zlUAe6mMh2yEnSytV64kkky6ahq663pmO48YtgboJjx000IK0vjNj";
+const PUBLIC_KEY_LIVE = "pk_live_51InSXCJ3U7h4NHwdQSvc3ITNikQJRw0otzlcVnUXDKrS51Xu2drNoOIfOk3VRZyJEsVarVkGJOrLz2HywPdM8Qdl006sUXBTwX";
 
 const PUBLIC_KEY = SANDBOX ? PUBLIC_KEY_TEST : PUBLIC_KEY_LIVE
 

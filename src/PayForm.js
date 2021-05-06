@@ -12,6 +12,8 @@ import dateformat from "dateformat";
 import { Backdrop } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import Stripe from "./StripeContainer";
+import Paper from '@material-ui/core/Paper';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -24,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   pageTitle: {
-    color: theme.palette.primary.main,
+    color: "#fff",
+    backgroundColor: theme.palette.primary.main,
     marginBottom: "15px",
-    minWidth: "320px"
+    minWidth: "320px",
+    padding: "15px"
   },
 
   backdrop: {
@@ -49,142 +53,150 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid #ddd`,
     borderRadius: "5px",
     color: "#333",
-    padding: "30px 5px",
+    padding: "10px 5px",
     textAlign: "left",
-    marginTop: "20px",
+    // marginTop: "30px",
     position: "relative",
   },
+
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 700,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    position: "relative",
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(0),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(2),
+      padding: theme.spacing(0),
+    },
+  },
+
+  itemLabel: {
+    fontSize: "1rem",
+    fontWeight: "500",
+    color: "#777",
+    marginRight: "10px"
+  },
+  itemData: {
+    fontSize: "1rem",
+    fontWeight: "600",
+    color: "#333"
+  }
+
 }));
 
 export default function PayForm() {
   const classes = useStyles();
   const [state, setState] = React.useContext(GlobalState);
 
-  const [loaded, setLoaded] = React.useState(false);
   const [submiting, setSubmitting] = React.useState(false);
 
-  const [personInfo, setPersonInfo] = React.useState(null);
-  
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    let sqPaymentScript = document.createElement("script");
-    sqPaymentScript.src = "https://js.squareup.com/v2/paymentform";
-    sqPaymentScript.type = "text/javascript";
-    sqPaymentScript.async = false;
-    sqPaymentScript.onload = () => {
-       setLoaded(true);
-    };
-    document.getElementsByTagName("head")[0].appendChild(sqPaymentScript);
-
-    loadPersonInfo();
-  }, []);
-
-  const loadPersonInfo = () => {
-    let referrer = window.location.pathname;
-    if (referrer && referrer.startsWith("/id")) {
-      referrer = "/";
-    }
-
-    const _personInfo = {
-      fullname: state.fullname,
-      email: state.email,
-      phone: state.phone,
-      notes: state.notes,
-      service: state.package,
-      bookingDate: dateformat(
-        new Date(state.bookingDate.toUTCString().slice(0, -4)),
-        "yyyy-mm-dd"
-      ),
-      bookingTime: state.bookingTime,
-      bookingRef: state.bookingRef,
-      referrer: referrer,
-    };
-
-    setPersonInfo(_personInfo);
-  };
-
-  const onComplete = (res) => {
-    setState((state) => ({ ...state, finalResults: [res] }));
-    setState((state) => ({ ...state, activeStep: state.activeStep + 1 }));
-    setSubmitting(false);
-  };
-
-  const onError = (err) => {
-    console.log(err);
-    setSubmitting(false);
-  };
-
-  const onStart = () => {
-    setSubmitting(true);
-  };
 
   return (
     <React.Fragment>
-      <Typography
-        className={classes.pageTitle}
-        variant="h6"
-        gutterBottom
-        style={{ marginBottom: "30px" }}
-      >
-        Pay Deposit
-      </Typography>
-
-      {(!loaded || !personInfo) && (
-        <React.Fragment>
-          {" "}
-          <CircularProgress color="primary" />
-        </React.Fragment>
-      )}
-
-      {personInfo && (
-        <div hidden={!loaded}>
-
-          <div>
-
-            <Alert severity="info" style={{marginBottom:"15px", fontSize:"0.95rem" ,lineHeight:"1.5rem", textAlign:"justify"}}>
-            This is the deposit to secure your appointment, you can cancel anytime up-to 48 working hours of your appointment.
-
-            </Alert>
-
-          </div>
-
-          <div className={classes.boxTime}>
-          <div className={classes.boxTitle}>Card Info</div>
-            {/* <PaymentForm
-              personInfo={personInfo}
-              onStart={onStart}
-              onComplete={onComplete}
-              onError={onError}
-            /> */}
-
-            <Stripe/>
-          </div>
-
-        
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <div
+            className={classes.pageTitle}
+          >
+            <div style={{ fontSize: "0.9rem", color: "#fafafa" }}>
+              Total to Pay :
         </div>
-      )}
+            <div style={{ fontSize: "1.5rem", fontWeight: "600" }}>
+              {`£${(
+                state.payment.amount
+              ).toLocaleString("en-GB")}`}
+            </div>
+          </div>
 
-      <Backdrop className={classes.backdrop} open={submiting}>
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item>
-            <CircularProgress color="inherit" />
-          </Grid>
-          <Grid item>
-            <span style={{ textAlign: "center", color: "#fff" }}>
-              {" "}
-              Please wait ...{" "}
-            </span>
-          </Grid>
-        </Grid>
-      </Backdrop>
+          <div style={{ padding: "10px 20px" }}>
+
+            <div className={classes.boxTime}>
+              <div className={classes.boxTitle}>Payment Info</div>
+              <Grid container spacing={2} style={{ padding: "15px 5px 10px 15px" }}>
+                <Grid item xs={12} style={{ textAlign: "left" }}>
+                  <span className={classes.itemLabel}>
+                    Issued by :
+                   </span>
+                  <span className={classes.itemData}>
+                    {'Museum Dental Suites'}
+                  </span>
+                </Grid>
+
+                <Grid item xs={12} style={{ textAlign: "left" }}>
+                  <span className={classes.itemLabel}>
+                    Issued for :
+                   </span>
+                  <span className={classes.itemData}>
+                    {state.payment.fullname}
+                  </span>
+                </Grid>
+
+                {state.payment.description && state.payment.description.length > 0 && (
+                  <Grid item xs={12} style={{ textAlign: "left" }}>
+                    <span className={classes.itemLabel}>
+                      Description :
+                   </span>
+                    <span className={classes.itemData}>
+                      {state.payment.description}
+                    </span>
+                  </Grid>
+                )}
+              </Grid>
+
+
+            </div>
+
+
+            <div className={classes.boxTime} style={{ marginTop: "30px" }}>
+              <div className={classes.boxTitle}>Enter Your Card Info</div>
+              <Stripe />
+            </div>
+
+
+            <div style={{ marginTop: "20px" }}>
+              <div style={{ color: "#bf9b30", fontWeight: "500", marginBottom: "5px" }}>
+                Powered and Secured by :
+            </div>
+              <a href="https://www.museumdentalsuites.co.uk/" target="_blank">
+                <img src="https://www.museumdentalsuites.co.uk/uploads/1534511600822Museum-Dental-Suites-logo.png" alt="logo" style={{ width: "110px", height: "60px" }} />
+              </a>
+            </div>
+
+          </div>
+
+          <Backdrop className={classes.backdrop} open={submiting}>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              spacing={2}
+            >
+              <Grid item>
+                <CircularProgress color="inherit" />
+              </Grid>
+              <Grid item>
+                <span style={{ textAlign: "center", color: "#fff" }}>
+                  {" "}
+                    Please wait ...{" "}
+                </span>
+              </Grid>
+            </Grid>
+          </Backdrop>
+
+        </Paper>
+      </main>
     </React.Fragment>
   );
 }

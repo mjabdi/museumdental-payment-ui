@@ -24,121 +24,111 @@ const xs = 0;
 // spacing
 const spacing = 8;
 
-const theme = createMuiTheme(
-  {
-    palette: {
-      primary: {
-        main: "#00909d",
-        dark: "#0c4e59",
-        light: "#d9fffd",
-        contrastText: "#fff",
-      },
-      secondary: { main: "#4a4f52" ,  contrastText: "#fff",},
-      common: {
-        black,
-        darkBlack,
-      },
-      warning: {
-        light: warningLight,
-        main: warningMain,
-        dark: warningDark,
-      },
-      // Used to shift a color's luminance by approximately
-      // two indexes within its tonal palette.
-      // E.g., shift from Red 500 to Red 300 or Red 700.
-      tonalOffset: 0.2,
-      background: {
-        default: background,
-      },
-      spacing,
-    },
-    breakpoints: {
-      // Define custom breakpoint values.
-      // These will apply to Material-UI components that use responsive
-      // breakpoints, such as `Grid` and `Hidden`. You can also use the
-      // theme breakpoint functions `up`, `down`, and `between` to create
-      // media queries for these breakpoints
-      values: {
-        xl,
-        lg,
-        md,
-        sm,
-        xs,
-      },
-    },
-    border: {
-      borderColor: borderColor,
-      borderWidth: borderWidth,
-    },
-    overrides: {
-      // MuiButton: {
+const theme = createMuiTheme({
 
-      //   primary:{
-      //     color: 'white',
-      //   },
+  palette: {
 
-      //   raisedPrimary: {
-      //     color: 'white',
-      //   },
-      // },
+    primary: { main: "#05acb2",
+               light: "#05acb2",
+               contrastText:"#fff"
+              //  dark: "#0288D1",
+              //  light: "#B3E5FC"
 
-      MuiExpansionPanel: {
-        root: {
-          position: "static",
-        },
       },
-      MuiTableCell: {
-        root: {
-          paddingLeft: spacing * 2,
-          paddingRight: spacing * 2,
-          borderBottom: `${borderWidth}px solid ${borderColor}`,
-          [`@media (max-width:  ${sm}px)`]: {
-            paddingLeft: spacing,
-            paddingRight: spacing,
-          },
-        },
-      },
-      MuiDivider: {
-        root: {
-          backgroundColor: borderColor,
-          height: borderWidth,
-        },
-      },
-      MuiPrivateNotchedOutline: {
-        root: {
-          borderWidth: borderWidth,
-        },
-      },
-      MuiListItem: {
-        divider: {
-          borderBottom: `${borderWidth}px solid ${borderColor}`,
-        },
-      },
-      MuiDialog: {
-        paper: {
-          width: "100%",
-          maxWidth: 430,
-          marginLeft: spacing,
-          marginRight: spacing,
-        },
-      },
-      MuiTooltip: {
-        tooltip: {
-          backgroundColor: darkBlack,
-          fontSize: "0.7rem",
-        },
-      },
-      MuiExpansionPanelDetails: {
-        root: {
-          [`@media (max-width:  ${sm}px)`]: {
-            paddingLeft: spacing,
-            paddingRight: spacing,
-          },
-        },
-      },
+    secondary: { main: "#bf9b30", contrastText:"#fff" },
+    common: {
+      black,
+      darkBlack
     },
+    warning: {
+      light: warningLight,
+      main: warningMain,
+      dark: warningDark
+    },
+    // Used to shift a color's luminance by approximately
+    // two indexes within its tonal palette.
+    // E.g., shift from Red 500 to Red 300 or Red 700.
+    tonalOffset: 0.2,
+    background: {
+      default: background
+    },
+    spacing
   },
-  enGB
-);
+  breakpoints: {
+    // Define custom breakpoint values.
+    // These will apply to Material-UI components that use responsive
+    // breakpoints, such as `Grid` and `Hidden`. You can also use the
+    // theme breakpoint functions `up`, `down`, and `between` to create
+    // media queries for these breakpoints
+    values: {
+      xl,
+      lg,
+      md,
+      sm,
+      xs
+    }
+  },
+  border: {
+    borderColor: borderColor,
+    borderWidth: borderWidth
+  },
+  overrides: {
+    MuiExpansionPanel: {
+      root: {
+        position: "static"
+      }
+    },
+    MuiTableCell: {
+      root: {
+        paddingLeft: spacing * 2,
+        paddingRight: spacing * 2,
+        borderBottom: `${borderWidth}px solid ${borderColor}`,
+        [`@media (max-width:  ${sm}px)`]: {
+          paddingLeft: spacing,
+          paddingRight: spacing
+        }
+      }
+    },
+    MuiDivider: {
+      root: {
+        backgroundColor: borderColor,
+        height: borderWidth
+      }
+    },
+    MuiPrivateNotchedOutline: {
+      root: {
+        borderWidth: borderWidth
+      }
+    },
+    MuiListItem: {
+      divider: {
+        borderBottom: `${borderWidth}px solid ${borderColor}`
+      }
+    },
+    MuiDialog: {
+      paper: {
+        width: "100%",
+        maxWidth: 430,
+        marginLeft: spacing,
+        marginRight: spacing
+      }
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: darkBlack,
+        fontSize: "0.7rem"
+      }
+    },
+    MuiExpansionPanelDetails: {
+      root: {
+        [`@media (max-width:  ${sm}px)`]: {
+          paddingLeft: spacing,
+          paddingRight: spacing
+        }
+      }
+    }
+  },
+ 
+}, enGB);
 
 export default responsiveFontSizes(theme);
