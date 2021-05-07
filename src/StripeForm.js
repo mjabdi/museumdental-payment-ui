@@ -103,9 +103,9 @@ export const StripeForm = () => {
     const [processing, setProcessing] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [billingDetails, setBillingDetails] = useState({
-        email: state.payment.email || '',
-        phone: state.payment.phone || '',
-        name: state.payment.fullname || ''
+        email: state.payment.email || null,
+        phone: state.payment.phone || null,
+        name: state.payment.fullname || null
     });
 
     useEffect(() => {
@@ -148,8 +148,7 @@ export const StripeForm = () => {
                 setProcessing(false);
 
                 if (res.data.status === "OK") {
-                    alert(res.data.payment.payment_method)
-                    setState((state) => ({ ...state, finalResults: [res] , activeStep: state.activeStep + 1 }));
+                    setState((state) => ({ ...state, payment_method : res.data.payment.payment_method, payment_already_done: false }));
                 }
 
             }

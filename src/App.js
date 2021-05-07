@@ -9,6 +9,7 @@ import theme from "./theme";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import GlobalStyles from "./GlobalStyles";
 import PayForm from "./PayForm";
+import PaymentSuccessForm from "./PaymentSuccessForm";
 
 const getPathId = () => {
   let urlElements = window.location.pathname.split("/");
@@ -37,11 +38,35 @@ function App() {
       if (res && res.data && res.data.status === "OK" && res.data.result)
       {
         const payment = res.data.result
-        if (!payment.deleted)
+
+        let payment_method = null
+
+        if (!payment.deleted && !payment.refund )
         {
-          setState(state=>({...state, payment : payment}))
+          if (payment.paymentInfo)
+          {
+            const payment_info = JSON.parse(payment.paymentInfo)
+            payment_method = payment_info.payment_method
+          }
+
+          setState(state=>({...state, payment : payment, payment_method: payment_method, payment_already_done: true}))
+        }
+        else if (payment.deleted)
+        {
+          setState(state=>({...state, payment_invalid : true}))
+        }else if (payment.refund)
+        {
+          setState(state=>({...state, payment_refund : true}))
+        }
+        else{
+          setState(state=>({...state, payment_invalid : true}))
         }
       }
+      else {
+        setState(state => ({ ...state, payment_invalid: true }))
+
+      }
+
     }catch(err)
     {
       console.error(err)
@@ -55,9 +80,22 @@ function App() {
         <GlobalStyles />
         <div className="App">
 
-        {state.payment && (
+        {state.payment && !state.payment_method && (
           <PayForm/>
         )}
+
+        {state.payment && state.payment_method && (
+          <PaymentSuccessForm/>
+        )}
+
+        {state.payment_invalid && (
+          `Invalid Payment Link!`
+        )}
+
+        {state.payment_refund && (
+          `Payment Already Refunded!`
+        )}
+
           
         </div>
       </MuiThemeProvider>
