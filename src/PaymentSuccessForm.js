@@ -149,11 +149,11 @@ export default function PaymentSuccessForm() {
                   }
                 
               </Typography>
-              <br />
+              {/* <br />
               <Typography style={{fontSize:"1.1rem", color:"#333"}}>
                 Your payment reference number is {" "}
                 <span className={classes.bold}>{`"${state.payment_method}"`}</span> 
-              </Typography>
+              </Typography> */}
 
             </Fade>
 
