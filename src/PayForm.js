@@ -169,7 +169,7 @@ export default function PayForm() {
                 Powered and Secured by :
             </div>
               <a href="https://www.museumdentalsuites.co.uk/" target="_blank">
-                <img src="https://www.museumdentalsuites.co.uk/uploads/1534511600822Museum-Dental-Suites-logo.png" alt="logo" style={{ width: "110px", height: "60px" }} />
+                <img src="https://www.museumdentalsuites.co.uk/public/design/images/Museum-Dental-Suites-logo.png" alt="logo" style={{ width: "110px", height: "60px" }} />
               </a>
             </div>
 
